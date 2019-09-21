@@ -1,0 +1,37 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="activity_bottom_bar_height">50dp</dimen>
+
+    <!-- Main Page -->
+    <dimen name="start_game_button_width">150dp</dimen>
+    <dimen name="start_game_button_height">40dp</dimen>
+    <dimen name="start_game_button_drawable_padding">10dp</dimen>
+    <dimen name="textview_space_margin">10dp</dimen>
+    <dimen name="high_level_padding">10dp</dimen>
+    <dimen name="sound_icon_width_height">35dp</dimen>
+    <dimen name="title_margin_bottom">50dp</dimen>
+    <dimen name="main_image_width_height">100dp</dimen>
+    <dimen name="main_page_top_margin">200dp</dimen>
+    <dimen name="item_space">20dp</dimen>
+
+    <dimen name="play_image_width_height">25dp</dimen>
+    <dimen name="ranking_button_width">150dp</dimen>
+    <dimen name="ranking_button_height">40dp</dimen>
+
+    <!-- Game Page -->
+    <dimen name="star_image_width_height">25dp</dimen>
+    <dimen name="star_space_margin">5dp</dimen>
+    <dimen name="start_button_margin_top">30dp</dimen>
+    <dimen name="timer_margin_top">10dp</dimen>
+    <dimen name="recycler_view_item_space">4dp</dimen>
+    <dimen name="recycler_view_width_padding">10dp</dimen>
+    <dimen name="finish_image_width_height">50dp</dimen>
+    <dimen name="start_button_width">100dp</dimen>
+
+    <!-- Dialog -->
+    <dimen name="dialog_text_width">100dp</dimen>
+
+</resources>

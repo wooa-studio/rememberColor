@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:background="@android:color/transparent" >
+
+    <ImageView
+        android:id="@+id/finish"
+        android:layout_width="@dimen/finish_image_width_height"
+        android:layout_height="@dimen/finish_image_width_height"
+        android:src="@drawable/racing_flag"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:id="@+id/currentRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/finish"
+        android:layout_marginTop="@dimen/textview_space_margin">
+
+        <TextView
+            android:id="@+id/currentRecordText"
+            android:layout_width="@dimen/dialog_text_width"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:gravity="right"
+            android:text="@string/current_record" />
+
+        <TextView
+            android:id="@+id/currentRecordCount"
+            android:layout_width="@dimen/dialog_text_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/textview_space_margin"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="0"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/currentRecord"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/timeText"
+            android:layout_width="@dimen/dialog_text_width"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:gravity="right"
+            android:text="@string/take_time"/>
+
+        <TextView
+            android:id="@+id/timeTextCount"
+            android:layout_width="@dimen/dialog_text_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/textview_space_margin"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="0"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/replayButtonLayout"
+        android:layout_width="@dimen/start_game_button_width"
+        android:layout_height="@dimen/start_game_button_height"
+        android:layout_below="@id/time"
+        android:layout_marginTop="@dimen/item_space"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:background="@drawable/ripple_background">
+
+        <ImageView
+            android:id="@+id/play_icon"
+            android:layout_width="@dimen/play_image_width_height"
+            android:layout_height="@dimen/play_image_width_height"
+            android:layout_centerVertical="true"
+            android:src="@drawable/play"
+            android:layout_marginLeft="@dimen/textview_space_margin"
+            android:layout_alignParentLeft="true"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/play_icon" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:text="@string/replay"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/homeButtonLayout"
+        android:layout_width="@dimen/start_game_button_width"
+        android:layout_height="@dimen/start_game_button_height"
+        android:layout_below="@id/replayButtonLayout"
+        android:layout_marginTop="@dimen/textview_space_margin"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:background="@drawable/ripple_background">
+
+        <ImageView
+            android:id="@+id/gohome"
+            android:layout_width="@dimen/play_image_width_height"
+            android:layout_height="@dimen/play_image_width_height"
+            android:layout_centerVertical="true"
+            android:src="@drawable/home"
+            android:layout_marginLeft="@dimen/textview_space_margin"
+            android:layout_alignParentLeft="true"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/gohome" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:text="@string/go_home"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

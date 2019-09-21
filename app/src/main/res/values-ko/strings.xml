@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">색 기억하기</string>
+    <string name="start">게임 시작</string>
+    <string name="highest_level">최고 성적 : </string>
+    <string name="latest_level">최근 성적 : </string>
+    <string name="ranking">랭킹 보기</string>
+    <string name="current_level">현재 레벨 : </string>
+    <string name="remaining_chance">남은 기회 </string>
+    <string name="current_record">이번 기록 : </string>
+    <string name="take_time">소요 시간 : </string>
+    <string name="replay">다시하기</string>
+    <string name="go_home">처음으로</string>
+    <string name="leaderboard_id">CgkI1_yYquwTEAIQAQ</string>
+</resources>
+
+

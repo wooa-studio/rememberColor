@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wooastudio.remember_color.GameActivity">
+
+    <RelativeLayout
+        android:id="@+id/topPanel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/star_image_width_height"
+        android:layout_margin="@dimen/textview_space_margin">
+
+        <LinearLayout
+            android:id="@+id/currentLevelLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/currentLevelText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="15dp"
+                android:layout_gravity="center_vertical"
+                android:text="@string/current_level" />
+
+            <TextView
+                android:id="@+id/currentLevelCount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/textview_space_margin"
+                android:textSize="15dp"
+                android:text="0"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/remainingChanceLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/remainingChanceText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:textSize="15dp"
+                android:text="@string/remaining_chance"
+                android:layout_marginRight="@dimen/textview_space_margin"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/firstStar"
+                    android:layout_width="@dimen/star_image_width_height"
+                    android:layout_height="@dimen/star_image_width_height"
+                    android:layout_marginRight="@dimen/star_space_margin">
+
+                    <ImageView
+                        android:id="@+id/firstStarOn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/star1"/>
+
+                    <ImageView
+                        android:id="@+id/firstStarOff"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/star2"
+                        android:visibility="invisible"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/secondStar"
+                    android:layout_width="@dimen/star_image_width_height"
+                    android:layout_height="@dimen/star_image_width_height"
+                    android:layout_toRightOf="@+id/firstStar"
+                    android:layout_marginRight="@dimen/star_space_margin">
+
+                    <ImageView
+                        android:id="@+id/secondStartOn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/star1"/>
+
+                    <ImageView
+                        android:id="@+id/secondStarOff"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/star2"
+                        android:visibility="invisible"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/thirdStar"
+                    android:layout_width="@dimen/star_image_width_height"
+                    android:layout_height="@dimen/star_image_width_height"
+                    android:layout_toRightOf="@+id/secondStar">
+
+                    <ImageView
+                        android:id="@+id/thirdStartOn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/star1"/>
+
+                    <ImageView
+                        android:id="@+id/thirdStarOff"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/star2"
+                        android:visibility="invisible"/>
+                </FrameLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/startBtnLayout"
+        android:layout_width="@dimen/start_button_width"
+        android:layout_height="@dimen/start_game_button_height"
+        android:layout_marginTop="@dimen/start_button_margin_top"
+        android:layout_below="@+id/topPanel"
+        android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:background="@drawable/ripple_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/start"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/cdtLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startBtnLayout"
+        android:layout_marginTop="@dimen/timer_margin_top"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/cdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="40sp"
+            android:text=""
+            android:gravity="center_horizontal" />
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:nestedScrollingEnabled="false"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"/>
+
+    <ImageView
+        android:id="@+id/sound_gamepage"
+        android:layout_width="@dimen/sound_icon_width_height"
+        android:layout_height="@dimen/sound_icon_width_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/sound"
+        android:layout_marginBottom="@dimen/item_space"
+        android:layout_marginRight="@dimen/item_space"
+        android:visibility="invisible"/>
+
+</RelativeLayout>

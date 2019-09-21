@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "681914547799",
+    "firebase_url": "https://wooa-studio-253609.firebaseio.com",
+    "project_id": "wooa-studio-253609",
+    "storage_bucket": "wooa-studio-253609.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681914547799:android:59ab020c1064c134faad12",
+        "android_client_info": {
+          "package_name": "com.wooastudio.remember_color"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681914547799-0ppu7m2c8tbvsk7869qo4acvui7ebucc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wooastudio.remember_color",
+            "certificate_hash": "47ba3058493ae7a713cc9bc24abed7e3efb30614"
+          }
+        },
+        {
+          "client_id": "681914547799-947ldeqjto2loh3llbaa8vpvbl1uu46f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJUGXZCXmZvTtVHzJW81-7qWTUhN6jzWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681914547799-947ldeqjto2loh3llbaa8vpvbl1uu46f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
