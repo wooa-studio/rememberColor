@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,28 +17,23 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.Drive;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.LeaderboardsClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PlayGamesAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String KEY = "AIzaSyBX0l21uToOt_cpHWCJ1EaPx3Q4GFghaf4";
     private static final int RC_LEADERBOARD_UI = 9004;
+    private static final int RC_SIGN_IN = 100;
 
     private TextView mHighestLevel;
     private TextView mLatestLevel;
 
-    private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
+    private LeaderboardsClient mLeaderboardsClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
-
         mHighestLevel = (TextView) findViewById(R.id.highestLevelCount);
         if (Util.getConfigValue(this, "highestLevel") != null) {
             mHighestLevel.setText(Util.getConfigValue(this, "highestLevel"));
@@ -81,17 +73,11 @@ public class MainActivity extends AppCompatActivity {
         if (Util.getConfigValue(this, "latestLevel") != null) {
             mLatestLevel.setText(Util.getConfigValue(this, "latestLevel"));
         }
-    }
 
-    private void showLeaderboard() {
-        Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                .getLeaderboardIntent(getString(R.string.leaderboard_id))
-                .addOnSuccessListener(new OnSuccessListener<Intent>() {
-                    @Override
-                    public void onSuccess(Intent intent) {
-                        startActivityForResult(intent, RC_LEADERBOARD_UI);
-                    }
-                });
+        // Create the client used to sign in to Google services.
+        mGoogleSignInClient = GoogleSignIn.getClient(this,
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build());
+
     }
 
     @Override
@@ -104,22 +90,44 @@ public class MainActivity extends AppCompatActivity {
         if (Util.getConfigValue(this, "latestLevel") != null) {
             mLatestLevel.setText(Util.getConfigValue(this, "latestLevel"));
         }
-
         //signInSilently();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+    private void showLeaderboard(GoogleSignInAccount googleSignInAccount) {
+
+        mLeaderboardsClient = Games.getLeaderboardsClient(this, googleSignInAccount);
+        int score = -1;
+        if (Util.getConfigValue(this, "highestLevel") != null) {
+            score = Integer.parseInt(Util.getConfigValue(this, "highestLevel"));
+            if (score > - 1) {
+                mLeaderboardsClient.submitScore(getString(R.string.leaderboard_id), score);
+            }
+        }
+
+
+        Games.getLeaderboardsClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .getLeaderboardIntent(getString(R.string.leaderboard_id))
+                .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        startActivityForResult(intent, RC_LEADERBOARD_UI);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        String message = e.toString();
+                        //handleException(e, getString(R.string.leaderboards_exception));
+                    }
+                });;
+
+
+
     }
 
-    private static final int RC_SIGN_IN = 100;
-
     private void signInSilently() {
-         GoogleSignInOptions signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN;
+         //GoogleSignInOptions signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN;
+        /*
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (GoogleSignIn.hasPermissions(account, signInOptions.getScopeArray())) {
@@ -149,15 +157,26 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
         }
+
+         */
+
+        mGoogleSignInClient.silentSignIn().addOnCompleteListener(this,
+                new OnCompleteListener<GoogleSignInAccount>() {
+                    @Override
+                    public void onComplete(@NonNull Task<GoogleSignInAccount> task) {
+                        if (task.isSuccessful()) {
+                            showLeaderboard(task.getResult());
+                        } else {
+                            //Log.d(TAG, "signInSilently(): failure", task.getException());
+                            //onDisconnected();
+                            startSignInIntent();
+                        }
+                    }
+                });
     }
 
     private void startSignInIntent() {
-        GoogleSignInOptions signInOptions = GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN;
-
-        GoogleSignInClient signInClient = GoogleSignIn.getClient(this,
-                signInOptions);
-        Intent intent = signInClient.getSignInIntent();
-        startActivityForResult(intent, RC_SIGN_IN);
+        startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
     }
 
     @Override
@@ -168,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             if (result.isSuccess()) {
                 // The signed in account is stored in the result.
                 GoogleSignInAccount signedInAccount = result.getSignInAccount();
-                firebaseAuthWithPlayGames(signedInAccount);
+                //firebaseAuthWithPlayGames(signedInAccount);
             } else {
                 String message = result.getStatus().getStatusMessage();
                 if (message == null || message.isEmpty()) {
@@ -179,34 +198,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    // Call this both in the silent sign-in task's OnCompleteListener and in the
-    // Activity's onActivityResult handler.
-    private void firebaseAuthWithPlayGames(GoogleSignInAccount acct) {
-        //Log.d(TAG, "firebaseAuthWithPlayGames:" + acct.getId());
-
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        AuthCredential credential = PlayGamesAuthProvider.getCredential(acct.getServerAuthCode());
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = auth.getCurrentUser();
-                            //updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
-                        }
-
-                        // ...
-                    }
-                });
-    }
-
 }
